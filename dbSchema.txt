@@ -1,0 +1,38 @@
+
+CREATE DATABASE IF NOT EXISTS music_recommender;
+USE music_recommender;
+
+CREATE TABLE songs (
+    track_id INT PRIMARY KEY,
+    name TEXT NOT NULL,
+    artist TEXT NOT NULL,
+    genre TEXT,
+    year INT,
+    preview_url TEXT
+);
+
+CREATE TABLE users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE recommendations (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    track_id INT NOT NULL,
+    score FLOAT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (track_id) REFERENCES songs(track_id) ON DELETE CASCADE
+);
+
+CREATE TABLE listen_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    track_id INT NOT NULL,
+    playcount INT DEFAULT 1,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (track_id) REFERENCES songs(track_id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_user_recommendations ON recommendations(user_id);
+CREATE INDEX idx_user_history ON listen_history(user_id);
