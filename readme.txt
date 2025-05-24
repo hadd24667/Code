@@ -18,5 +18,7 @@ Run api server
 //hieu update
 
 Hiện tại đang dùng sql nên đây là list cần sửa để dùng sang mysql
-    1. db.py : lấy file lại từ nhánh main
-    2. main.py: lấy file lại từ nhánh main
+merge: (nếu dùng mySQL)
+    + file db.py đừng merge của t vô (tại t sửa để dùng sql -> lấy file cũ)
+    + main.py : lấy get_top_played_songs, get_db_connection của file cũ, nhớ import mysql.connector 
+    + dashboard merge bình thường
