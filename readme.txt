@@ -1,5 +1,6 @@
 cài thư viện python
    pip install fastapi mysql-connector-python uvicorn faker pandas numpy
+   pip install fastapi[all]
 tạo database 
    dùng schema trong dbSchema.txt
 Import database
@@ -14,3 +15,8 @@ Run api server
     GET /user/{user_id}/recommendations
 
    
+//hieu update
+
+Hiện tại đang dùng sql nên đây là list cần sửa để dùng sang mysql
+    1. db.py : lấy file lại từ nhánh main
+    2. main.py: lấy file lại từ nhánh main
