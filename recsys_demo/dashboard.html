@@ -1,310 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        background-color: #0f0f0f;
-        font-family: "Segoe UI", sans-serif;
-        height: 100vh;
-        overflow: hidden;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #0f0f0f;
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      overflow-y: auto;
+    }
 
-      .scroll-area {
-        height: 9.2em;
-        overflow-y: auto;
-      }
+    .scroll-area {
+      max-height: 400px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(244, 114, 182, 0.3) transparent;
+    }
 
-      .scroll-area::-webkit-scrollbar {
-        width: 6px;
-      }
+    .scroll-area::-webkit-scrollbar {
+      width: 6px;
+    }
 
-      .scroll-area::-webkit-scrollbar-track {
-        background: transparent;
-      }
+    .scroll-area::-webkit-scrollbar-track {
+      background: transparent;
+    }
 
-      .scroll-area::-webkit-scrollbar-thumb {
-        background-color: rgba(244, 114, 182, 0.3);
-        border-radius: 10px;
-      }
+    .scroll-area::-webkit-scrollbar-thumb {
+      background-color: rgba(244, 114, 182, 0.3);
+      border-radius: 10px;
+    }
+  </style>
+</head>
 
-      .scroll-area {
-        scrollbar-width: thin;
-        scrollbar-color: rgba(244, 114, 182, 0.3) transparent;
-      }
-    </style>
-  </head>
+<body class="text-pink-100 min-h-screen p-6">
+  <h1 class="text-4xl font-bold text-center text-pink-400 mb-8">🎧 Admin Dashboard</h1>
 
-  <body class="text-pink-100 min-h-screen p-6">
-    <h1 class="text-4xl font-bold text-center text-pink-400 mb-8">
-      🎧 Admin Dashboard
-    </h1>
+  <!-- Stats -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+    <div class="bg-gray-900 p-4 rounded-lg shadow text-center">
+      <p id="statUsers" class="text-xl font-bold text-pink-300">...</p>
+      <p>Users</p>
+    </div>
+    <div class="bg-gray-900 p-4 rounded-lg shadow text-center">
+      <p id="statSongs" class="text-xl font-bold text-pink-300">...</p>
+      <p>Songs</p>
+    </div>
+    <div class="bg-gray-900 p-4 rounded-lg shadow text-center">
+      <p id="statRecs" class="text-xl font-bold text-pink-300">...</p>
+      <p>Recommendations</p>
+    </div>
+    <div class="bg-gray-900 p-4 rounded-lg shadow text-center">
+      <p id="statPlays" class="text-xl font-bold text-pink-300">...</p>
+      <p>Total Plays</p>
+    </div>
+  </div>
 
-    <!-- Stats -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-      <div class="bg-gray-900 p-4 rounded-lg shadow text-center">
-        <p id="statUsers" class="text-xl font-bold text-pink-300">...</p>
-        <p>Users</p>
-      </div>
-      <div class="bg-gray-900 p-4 rounded-lg shadow text-center">
-        <p id="statSongs" class="text-xl font-bold text-pink-300">...</p>
-        <p>Songs</p>
-      </div>
-      <div class="bg-gray-900 p-4 rounded-lg shadow text-center">
-        <p id="statRecs" class="text-xl font-bold text-pink-300">...</p>
-        <p>Recommendations</p>
-      </div>
-      <div class="bg-gray-900 p-4 rounded-lg shadow text-center">
-        <p id="statPlays" class="text-xl font-bold text-pink-300">...</p>
-        <p>Total Plays</p>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Left: Top Played Songs -->
+    <div class="bg-gray-900 rounded-lg p-5 shadow overflow-hidden flex flex-col">
+      <h2 class="text-2xl font-semibold text-pink-300 mb-4">🔥 Top Played Songs</h2>
+      <div id="topSongsList" class="scroll-area pr-2 space-y-3">
+        <div class="bg-gray-800 p-3 rounded">
+          <p class="font-semibold">Bohemian Rhapsody - Queen</p>
+          <p class="text-sm text-gray-400">Rock • 1975</p>
+          <audio controls class="mt-2 w-full">
+            <source src="https://p.scdn.co/mp3-preview/65aeba64446260387b180f36bf2c4024b272a81a?cid=774b29d4f13844c495f206cafdad9c86" type="audio/mpeg" />
+          </audio>
+        </div>
+        <div class="bg-gray-800 p-3 rounded">
+          <p class="font-semibold">Imagine - John Lennon</p>
+          <p class="text-sm text-gray-400">Rock • 1971</p>
+          <audio controls class="mt-2 w-full" src="https://www.example.com/audio/imagine.mp3"></audio>
+        </div>
+        <div class="bg-gray-800 p-3 rounded">
+          <p class="font-semibold">Stay - Justin Bieber</p>
+          <p class="text-sm text-gray-400">Pop • 2021</p>
+          <audio controls class="mt-2 w-full" src="https://www.example.com/audio/stay.mp3"></audio>
+        </div>
+        <div class="bg-gray-800 p-3 rounded">
+          <p class="font-semibold">Easy On Me - Adele</p>
+          <p class="text-sm text-gray-400">Soul • 2021</p>
+          <audio controls class="mt-2 w-full" src="https://www.example.com/audio/easy_on_me.mp3"></audio>
+        </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Left: Top Played Songs -->
-      <div
-        class="bg-gray-900 rounded-lg p-5 shadow overflow-hidden flex flex-col"
-        style="height: calc(100vh - 250px)"
-      >
-        <h2 class="text-2xl font-semibold text-pink-300 mb-4">
-          🔥 Top Played Songs
-        </h2>
-        <div
-          id="topSongsList"
-          class="scroll-area flex-1 pr-2 space-y-3 overflow-y-auto"
+    <!-- Right: User Input + Results -->
+    <div class="flex flex-col space-y-4">
+      <!-- Search -->
+      <div class="bg-gray-900 rounded-lg p-5 shadow">
+        <h2 class="text-xl font-semibold text-pink-300 mb-3">Search by User ID</h2>
+        <input
+          type="text"
+          id="userIdInput"
+          placeholder="Enter User ID"
+          class="w-full p-3 rounded bg-gray-800 text-white border border-pink-400 mb-3 focus:outline-none"
+        />
+        <button
+          onclick="searchUser()"
+          class="w-full bg-pink-500 text-white py-2 rounded hover:bg-pink-600"
         >
-          <div class="bg-gray-800 p-3 rounded">
-            <p class="font-semibold">Bohemian Rhapsody - Queen</p>
-            <p class="text-sm text-gray-400">Rock • 1975</p>
-            <audio controls class="mt-2 w-full">
-              <source
-                src="https://p.scdn.co/mp3-preview/65aeba64446260387b180f36bf2c4024b272a81a?cid=774b29d4f13844c495f206cafdad9c86"
-                type="audio/mpeg"
-              />
-            </audio>
-          </div>
-          <div class="bg-gray-800 p-3 rounded">
-            <p class="font-semibold">Imagine - John Lennon</p>
-            <p class="text-sm text-gray-400">Rock • 1971</p>
-            <audio
-              controls
-              class="mt-2 w-full"
-              src="https://www.example.com/audio/imagine.mp3"
-            ></audio>
-          </div>
-          <div class="bg-gray-800 p-3 rounded">
-            <p class="font-semibold">Stay - Justin Bieber</p>
-            <p class="text-sm text-gray-400">Pop • 2021</p>
-            <audio
-              controls
-              class="mt-2 w-full"
-              src="https://www.example.com/audio/stay.mp3"
-            ></audio>
-          </div>
-          <div class="bg-gray-800 p-3 rounded">
-            <p class="font-semibold">Stay - Justin Bieber</p>
-            <p class="text-sm text-gray-400">Pop • 2021</p>
-            <audio
-              controls
-              class="mt-2 w-full"
-              src="https://www.example.com/audio/stay.mp3"
-            ></audio>
-          </div>
-          <div class="bg-gray-800 p-3 rounded">
-            <p class="font-semibold">Stay - Justin Bieber</p>
-            <p class="text-sm text-gray-400">Pop • 2021</p>
-            <audio
-              controls
-              class="mt-2 w-full"
-              src="https://www.example.com/audio/stay.mp3"
-            ></audio>
-          </div>
-          <div class="bg-gray-800 p-3 rounded">
-            <p class="font-semibold">Stay - Justin Bieber</p>
-            <p class="text-sm text-gray-400">Pop • 2021</p>
-            <audio
-              controls
-              class="mt-2 w-full"
-              src="https://www.example.com/audio/stay.mp3"
-            ></audio>
-          </div>
+          View Recommendations & History
+        </button>
+      </div>
+
+      <!-- History -->
+      <div class="bg-gray-900 rounded-lg p-5 shadow flex flex-col">
+        <h2 class="text-xl font-semibold text-pink-300 mb-3">Listening History</h2>
+        <div id="historyList" class="scroll-area pr-2 space-y-3">
+          <!-- JS renders here -->
         </div>
       </div>
 
-      <!-- Right: User Input + Results -->
-      <div class="flex flex-col space-y-4">
-        <!-- Search -->
-        <div class="bg-gray-900 rounded-lg p-5 shadow">
-          <h2 class="text-xl font-semibold text-pink-300 mb-3">
-            Search by User ID
-          </h2>
-          <input
-            type="text"
-            id="userIdInput"
-            placeholder="Enter User ID"
-            class="w-full p-3 rounded bg-gray-800 text-white border border-pink-400 mb-3 focus:outline-none"
-          />
-          <button
-            onclick="searchUser()"
-            class="w-full bg-pink-500 text-white py-2 rounded hover:bg-pink-600"
-          >
-            View Recommendations & History
-          </button>
-        </div>
-
-        <!-- History -->
-        <div class="bg-gray-900 rounded-lg p-5 shadow">
-          <h2 class="text-xl font-semibold text-pink-300 mb-3">
-            Listening History
-          </h2>
-          <div id="historyList" class="scroll-area pr-2 space-y-3">
-            <!-- JS renders here -->
-          </div>
-        </div>
-
-        <!-- Recommendations -->
-        <div class="bg-gray-900 rounded-lg p-5 shadow">
-          <h2 class="text-xl font-semibold text-pink-300 mb-3">
-            Recommended Songs
-          </h2>
-          <div id="recommendationList" class="scroll-area pr-2 space-y-3">
-            <!-- JS renders here -->
-          </div>
+      <!-- Recommendations -->
+      <div class="bg-gray-900 rounded-lg p-5 shadow flex flex-col">
+        <h2 class="text-xl font-semibold text-pink-300 mb-3">Recommended Songs</h2>
+        <div id="recommendationList" class="scroll-area pr-2 space-y-3">
+          <!-- JS renders here -->
         </div>
       </div>
     </div>
+  </div>
 
-    <script>
-      async function searchUser() {
-        const id = document.getElementById("userIdInput").value.trim();
-        const historyDiv = document.getElementById("historyList");
-        const recommendationDiv = document.getElementById("recommendationList");
-        historyDiv.innerHTML = "";
-        recommendationDiv.innerHTML = "";
+  <script>
+    async function searchUser() {
+      const id = document.getElementById("userIdInput").value.trim();
+      const historyDiv = document.getElementById("historyList");
+      const recommendationDiv = document.getElementById("recommendationList");
+      historyDiv.innerHTML = "";
+      recommendationDiv.innerHTML = "";
 
-        if (!id) {
-          historyDiv.innerHTML =
-            "<p class='text-red-400'>Please enter a User ID</p>";
-          return;
-        }
-
-        // Lấy lịch sử nghe nhạc
-        try {
-          const historyRes = await fetch(
-            `http://localhost:8000/user/${id}/history`
-          );
-          if (!historyRes.ok) throw new Error("Not found");
-          const historyData = await historyRes.json();
-          if (historyData.listening_history.length === 0) {
-            historyDiv.innerHTML =
-              "<p class='text-gray-400'>No listening history.</p>";
-          } else {
-            historyData.listening_history.forEach((song) => {
-              const div = document.createElement("div");
-              div.className = "bg-gray-800 p-3 rounded";
-              div.innerHTML = `
-            <p class="font-semibold">${song.song_name} - ${song.artist}</p>
-            <p class="text-sm text-gray-400">${song.genre} • ${song.year} • ${song.playcount} plays</p>
-            <audio controls class="mt-2 w-full" src="${song.preview_url}"></audio>
-          `;
-              historyDiv.appendChild(div);
-            });
-          }
-        } catch (e) {
-          historyDiv.innerHTML =
-            "<p class='text-red-400'>User not found or error loading history.</p>";
-        }
-
-        // Lấy gợi ý
-        try {
-          const recRes = await fetch(
-            `http://localhost:8000/user/${id}/recommendations`
-          );
-          if (!recRes.ok) throw new Error("Not found");
-          const recData = await recRes.json();
-          if (recData.recommendations.length === 0) {
-            recommendationDiv.innerHTML =
-              "<p class='text-gray-400'>No recommendations.</p>";
-          } else {
-            recData.recommendations.forEach((song) => {
-              const div = document.createElement("div");
-              div.className = "bg-gray-800 p-3 rounded";
-              div.innerHTML = `
-            <p class="font-semibold">${song.song_name} - ${song.artist}</p>
-            <p class="text-sm text-gray-400">${song.genre} • ${song.year} • Score: ${song.score}</p>
-            <audio controls class="mt-2 w-full" src="${song.preview_url}"></audio>
-          `;
-              recommendationDiv.appendChild(div);
-            });
-          }
-        } catch (e) {
-          recommendationDiv.innerHTML =
-            "<p class='text-red-400'>User not found or error loading recommendations.</p>";
-        }
+      if (!id) {
+        historyDiv.innerHTML = "<p class='text-red-400'>Please enter a User ID</p>";
+        return;
       }
 
-      async function loadTopPlayedSongs() {
-        const topSongsDiv = document.getElementById("topSongsList");
-        topSongsDiv.innerHTML = "<p class='text-gray-400'>Loading...</p>";
-        try {
-          const res = await fetch(
-            "http://localhost:8000/dashboard/top-played-songs"
-          );
-          if (!res.ok) throw new Error("API error");
-          const data = await res.json();
-          if (!data.top_played_songs || data.top_played_songs.length === 0) {
-            topSongsDiv.innerHTML = "<p class='text-gray-400'>No data.</p>";
-            return;
-          }
-          topSongsDiv.innerHTML = "";
-          data.top_played_songs.forEach((song) => {
+      // Fetch listening history
+      try {
+        const historyRes = await fetch(`http://localhost:8000/user/${id}/history`);
+        if (!historyRes.ok) throw new Error("Not found");
+        const historyData = await historyRes.json();
+        if (historyData.listening_history.length === 0) {
+          historyDiv.innerHTML = "<p class='text-gray-400'>No listening history.</p>";
+        } else {
+          historyData.listening_history.forEach((song) => {
             const div = document.createElement("div");
             div.className = "bg-gray-800 p-3 rounded";
             div.innerHTML = `
-          <p class="font-semibold">${song.title} - ${song.artist}</p>
-          <p class="text-sm text-gray-400">${song.genre} • ${song.year} • ${song.total_playcount} plays</p>
-          <audio controls class="mt-2 w-full" src="${song.url}"></audio>
-        `;
-            topSongsDiv.appendChild(div);
+              <p class="font-semibold">${song.song_name} - ${song.artist}</p>
+              <p class="text-sm text-gray-400">${song.genre} • ${song.year} • ${song.playcount} plays</p>
+              <audio controls class="mt-2 w-full" src="${song.preview_url}"></audio>
+            `;
+            historyDiv.appendChild(div);
           });
-        } catch (e) {
-          topSongsDiv.innerHTML =
-            "<p class='text-red-400'>Error loading top played songs.</p>";
         }
+      } catch (e) {
+        historyDiv.innerHTML = "<p class='text-red-400'>User not found or error loading history.</p>";
       }
 
-      async function loadDashboardStats() {
-        try {
-          const res = await fetch("http://localhost:8000/dashboard/summary");
-          if (!res.ok) throw new Error("API error");
-          const data = await res.json();
-          document.getElementById("statUsers").textContent =
-            data.users.toLocaleString();
-          document.getElementById("statSongs").textContent =
-            data.songs.toLocaleString();
-          document.getElementById("statRecs").textContent =
-            data.recommendations.toLocaleString();
-          document.getElementById("statPlays").textContent =
-            data.total_plays.toLocaleString();
-        } catch (e) {
-          document.getElementById("statUsers").textContent = "-";
-          document.getElementById("statSongs").textContent = "-";
-          document.getElementById("statRecs").textContent = "-";
-          document.getElementById("statPlays").textContent = "-";
+      // Fetch recommendations
+      try {
+        const recRes = await fetch(`http://localhost:8000/user/${id}/recommendations`);
+        if (!recRes.ok) throw new Error("Not found");
+        const recData = await recRes.json();
+        if (recData.recommendations.length === 0) {
+          recommendationDiv.innerHTML = "<p class='text-gray-400'>No recommendations.</p>";
+        } else {
+          recData.recommendations.forEach((song) => {
+            const div = document.createElement("div");
+            div.className = "bg-gray-800 p-3 rounded";
+            div.innerHTML = `
+              <p class="font-semibold">${song.song_name} - ${song.artist}</p>
+              <p class="text-sm text-gray-400">${song.genre} • ${song.year} • Score: ${song.score}</p>
+              <audio controls class="mt-2 w-full" src="${song.preview_url}"></audio>
+            `;
+            recommendationDiv.appendChild(div);
+          });
         }
+      } catch (e) {
+        recommendationDiv.innerHTML = "<p class='text-red-400'>User not found or error loading recommendations.</p>";
       }
+    }
 
-      // Gọi khi trang vừa load
-      window.onload = function () {
-        loadDashboardStats();
-        loadTopPlayedSongs();
-      };
-    </script>
-  </body>
+    async function loadTopPlayedSongs() {
+      const topSongsDiv = document.getElementById("topSongsList");
+      topSongsDiv.innerHTML = "<p class='text-gray-400'>Loading...</p>";
+      try {
+        const res = await fetch("http://localhost:8000/dashboard/top-played-songs");
+        if (!res.ok) throw new Error("API error");
+        const data = await res.json();
+        if (!data.top_played_songs || data.top_played_songs.length === 0) {
+          topSongsDiv.innerHTML = "<p class='text-gray-400'>No data.</p>";
+          return;
+        }
+        topSongsDiv.innerHTML = "";
+        data.top_played_songs.forEach((song) => {
+          const div = document.createElement("div");
+          div.className = "bg-gray-800 p-3 rounded";
+          div.innerHTML = `
+            <p class="font-semibold">${song.title} - ${song.artist}</p>
+            <p class="text-sm text-gray-400">${song.genre} • ${song.year} • ${song.total_playcount} plays</p>
+            <audio controls class="mt-2 w-full" src="${song.url}"></audio>
+          `;
+          topSongsDiv.appendChild(div);
+        });
+      } catch (e) {
+        topSongsDiv.innerHTML = "<p class='text-red-400'>Error loading top played songs.</p>";
+      }
+    }
+
+    async function loadDashboardStats() {
+      try {
+        const res = await fetch("http://localhost:8000/dashboard/summary");
+        if (!res.ok) throw new Error("API error");
+        const data = await res.json();
+        document.getElementById("statUsers").textContent = data.users.toLocaleString();
+        document.getElementById("statSongs").textContent = data.songs.toLocaleString();
+        document.getElementById("statRecs").textContent = data.recommendations.toLocaleString();
+        document.getElementById("statPlays").textContent = data.total_plays.toLocaleString();
+      } catch (e) {
+        document.getElementById("statUsers").textContent = "-";
+        document.getElementById("statSongs").textContent = "-";
+        document.getElementById("statRecs").textContent = "-";
+        document.getElementById("statPlays").textContent = "-";
+      }
+    }
+
+    // Call when page loads
+    window.onload = function () {
+      loadDashboardStats();
+      loadTopPlayedSongs();
+    };
+  </script>
+</body>
 </html>
