@@ -4,11 +4,11 @@ USE music_recommender;
 
 CREATE TABLE songs (
     track_id INT PRIMARY KEY,
-    name TEXT NOT NULL,
-    artist TEXT NOT NULL,
-    genre TEXT,
+    name VARCHAR(255) NOT NULL,
+    artist VARCHAR(255) NOT NULL,
+    genre VARCHAR(255),
     year INT,
-    preview_url TEXT
+    preview_url VARCHAR(255)
 );
 
 CREATE TABLE users (

@@ -1,5 +1,6 @@
 cài thư viện python
    pip install fastapi mysql-connector-python uvicorn faker pandas numpy
+   pip install fastapi[all]
 tạo database 
    dùng schema trong dbSchema.txt
 Import database
@@ -14,3 +15,10 @@ Run api server
     GET /user/{user_id}/recommendations
 
    
+//hieu update
+
+Hiện tại đang dùng sql nên đây là list cần sửa để dùng sang mysql
+merge: (nếu dùng mySQL)
+    + file db.py đừng merge của t vô (tại t sửa để dùng sql -> lấy file cũ)
+    + main.py : lấy get_top_played_songs, get_db_connection của file cũ, nhớ import mysql.connector 
+    + dashboard merge bình thường

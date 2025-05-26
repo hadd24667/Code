@@ -2,7 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# Dữ liệu từ MySQL
+# Dữ liệu từ SQL
 history_data = [
     {"user_id": 1, "song_id": 101, "play_count": 5, "total_duration": 300},
     {"user_id": 2, "song_id": 101, "play_count": 2, "total_duration": 120},

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,7 +33,6 @@
       border-radius: 10px;
     }
   </style>
-
 </head>
 
 <body class="text-pink-100 min-h-screen p-6">
@@ -43,19 +41,19 @@
   <!-- Stats -->
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
     <div class="bg-gray-900 p-4 rounded-lg shadow text-center">
-      <p class="text-xl font-bold text-pink-300">1200</p>
+      <p id="statUsers" class="text-xl font-bold text-pink-300">...</p>
       <p>Users</p>
     </div>
     <div class="bg-gray-900 p-4 rounded-lg shadow text-center">
-      <p class="text-xl font-bold text-pink-300">650</p>
+      <p id="statSongs" class="text-xl font-bold text-pink-300">...</p>
       <p>Songs</p>
     </div>
     <div class="bg-gray-900 p-4 rounded-lg shadow text-center">
-      <p class="text-xl font-bold text-pink-300">8,430</p>
+      <p id="statRecs" class="text-xl font-bold text-pink-300">...</p>
       <p>Recommendations</p>
     </div>
     <div class="bg-gray-900 p-4 rounded-lg shadow text-center">
-      <p class="text-xl font-bold text-pink-300">15,290</p>
+      <p id="statPlays" class="text-xl font-bold text-pink-300">...</p>
       <p>Total Plays</p>
     </div>
   </div>
@@ -64,7 +62,7 @@
     <!-- Left: Top Played Songs -->
     <div class="bg-gray-900 rounded-lg p-5 shadow overflow-hidden flex flex-col">
       <h2 class="text-2xl font-semibold text-pink-300 mb-4">🔥 Top Played Songs</h2>
-      <div class="scroll-area pr-2 space-y-3">
+      <div id="topSongsList" class="scroll-area pr-2 space-y-3">
         <div class="bg-gray-800 p-3 rounded">
           <p class="font-semibold">Bohemian Rhapsody - Queen</p>
           <p class="text-sm text-gray-400">Rock • 1975</p>
@@ -87,7 +85,6 @@
           <p class="text-sm text-gray-400">Soul • 2021</p>
           <audio controls class="mt-2 w-full" src="https://www.example.com/audio/easy_on_me.mp3"></audio>
         </div>
-        <!-- More songs... -->
       </div>
     </div>
 
@@ -96,9 +93,16 @@
       <!-- Search -->
       <div class="bg-gray-900 rounded-lg p-5 shadow">
         <h2 class="text-xl font-semibold text-pink-300 mb-3">Search by User ID</h2>
-        <input type="text" id="userIdInput" placeholder="Enter User ID"
-          class="w-full p-3 rounded bg-gray-800 text-white border border-pink-400 mb-3 focus:outline-none" />
-        <button onclick="searchUser()" class="w-full bg-pink-500 text-white py-2 rounded hover:bg-pink-600">
+        <input
+          type="text"
+          id="userIdInput"
+          placeholder="Enter User ID"
+          class="w-full p-3 rounded bg-gray-800 text-white border border-pink-400 mb-3 focus:outline-none"
+        />
+        <button
+          onclick="searchUser()"
+          class="w-full bg-pink-500 text-white py-2 rounded hover:bg-pink-600"
+        >
           View Recommendations & History
         </button>
       </div>
@@ -122,7 +126,7 @@
   </div>
 
   <script>
-    function searchUser() {
+    async function searchUser() {
       const id = document.getElementById("userIdInput").value.trim();
       const historyDiv = document.getElementById("historyList");
       const recommendationDiv = document.getElementById("recommendationList");
@@ -134,40 +138,102 @@
         return;
       }
 
-      // 🎧 Mock data
-      const history = [
-        { title: "Shape of You", artist: "Ed Sheeran", genre: "Pop", year: 2017, playcount: 12, url: "https://www.example.com/audio/shape.mp3" },
-        { title: "Perfect", artist: "Ed Sheeran", genre: "Ballad", year: 2018, playcount: 9, url: "https://www.example.com/audio/perfect.mp3" }
-      ];
+      // Fetch listening history
+      try {
+        const historyRes = await fetch(`http://localhost:8000/user/${id}/history`);
+        if (!historyRes.ok) throw new Error("Not found");
+        const historyData = await historyRes.json();
+        if (historyData.listening_history.length === 0) {
+          historyDiv.innerHTML = "<p class='text-gray-400'>No listening history.</p>";
+        } else {
+          historyData.listening_history.forEach((song) => {
+            const div = document.createElement("div");
+            div.className = "bg-gray-800 p-3 rounded";
+            div.innerHTML = `
+              <p class="font-semibold">${song.song_name} - ${song.artist}</p>
+              <p class="text-sm text-gray-400">${song.genre} • ${song.year} • ${song.playcount} plays</p>
+              <audio controls class="mt-2 w-full" src="${song.preview_url}"></audio>
+            `;
+            historyDiv.appendChild(div);
+          });
+        }
+      } catch (e) {
+        historyDiv.innerHTML = "<p class='text-red-400'>User not found or error loading history.</p>";
+      }
 
-      const recommendations = [
-        { title: "Imagine", artist: "John Lennon", genre: "Rock", year: 1971, score: 0.91, url: "https://www.example.com/audio/imagine.mp3" },
-        { title: "Easy On Me", artist: "Adele", genre: "Soul", year: 2021, score: 0.87, url: "https://www.example.com/audio/easy_on_me.mp3" }
-      ];
-
-      history.forEach(song => {
-        const div = document.createElement("div");
-        div.className = "bg-gray-800 p-3 rounded";
-        div.innerHTML = `
-          <p class="font-semibold">${song.title} - ${song.artist}</p>
-          <p class="text-sm text-gray-400">${song.genre} • ${song.year} • ${song.playcount} plays</p>
-          <audio controls class="mt-2 w-full" src="${song.url}"></audio>
-        `;
-        historyDiv.appendChild(div);
-      });
-
-      recommendations.forEach(song => {
-        const div = document.createElement("div");
-        div.className = "bg-gray-800 p-3 rounded";
-        div.innerHTML = `
-          <p class="font-semibold">${song.title} - ${song.artist}</p>
-          <p class="text-sm text-gray-400">${song.genre} • ${song.year} • Score: ${song.score}</p>
-          <audio controls class="mt-2 w-full" src="${song.url}"></audio>
-        `;
-        recommendationDiv.appendChild(div);
-      });
+      // Fetch recommendations
+      try {
+        const recRes = await fetch(`http://localhost:8000/user/${id}/recommendations`);
+        if (!recRes.ok) throw new Error("Not found");
+        const recData = await recRes.json();
+        if (recData.recommendations.length === 0) {
+          recommendationDiv.innerHTML = "<p class='text-gray-400'>No recommendations.</p>";
+        } else {
+          recData.recommendations.forEach((song) => {
+            const div = document.createElement("div");
+            div.className = "bg-gray-800 p-3 rounded";
+            div.innerHTML = `
+              <p class="font-semibold">${song.song_name} - ${song.artist}</p>
+              <p class="text-sm text-gray-400">${song.genre} • ${song.year} • Score: ${song.score}</p>
+              <audio controls class="mt-2 w-full" src="${song.preview_url}"></audio>
+            `;
+            recommendationDiv.appendChild(div);
+          });
+        }
+      } catch (e) {
+        recommendationDiv.innerHTML = "<p class='text-red-400'>User not found or error loading recommendations.</p>";
+      }
     }
+
+    async function loadTopPlayedSongs() {
+      const topSongsDiv = document.getElementById("topSongsList");
+      topSongsDiv.innerHTML = "<p class='text-gray-400'>Loading...</p>";
+      try {
+        const res = await fetch("http://localhost:8000/dashboard/top-played-songs");
+        if (!res.ok) throw new Error("API error");
+        const data = await res.json();
+        if (!data.top_played_songs || data.top_played_songs.length === 0) {
+          topSongsDiv.innerHTML = "<p class='text-gray-400'>No data.</p>";
+          return;
+        }
+        topSongsDiv.innerHTML = "";
+        data.top_played_songs.forEach((song) => {
+          const div = document.createElement("div");
+          div.className = "bg-gray-800 p-3 rounded";
+          div.innerHTML = `
+            <p class="font-semibold">${song.title} - ${song.artist}</p>
+            <p class="text-sm text-gray-400">${song.genre} • ${song.year} • ${song.total_playcount} plays</p>
+            <audio controls class="mt-2 w-full" src="${song.url}"></audio>
+          `;
+          topSongsDiv.appendChild(div);
+        });
+      } catch (e) {
+        topSongsDiv.innerHTML = "<p class='text-red-400'>Error loading top played songs.</p>";
+      }
+    }
+
+    async function loadDashboardStats() {
+      try {
+        const res = await fetch("http://localhost:8000/dashboard/summary");
+        if (!res.ok) throw new Error("API error");
+        const data = await res.json();
+        document.getElementById("statUsers").textContent = data.users.toLocaleString();
+        document.getElementById("statSongs").textContent = data.songs.toLocaleString();
+        document.getElementById("statRecs").textContent = data.recommendations.toLocaleString();
+        document.getElementById("statPlays").textContent = data.total_plays.toLocaleString();
+      } catch (e) {
+        document.getElementById("statUsers").textContent = "-";
+        document.getElementById("statSongs").textContent = "-";
+        document.getElementById("statRecs").textContent = "-";
+        document.getElementById("statPlays").textContent = "-";
+      }
+    }
+
+    // Call when page loads
+    window.onload = function () {
+      loadDashboardStats();
+      loadTopPlayedSongs();
+    };
   </script>
 </body>
-
 </html>
